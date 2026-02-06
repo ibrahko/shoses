@@ -2,34 +2,34 @@
 
 import { useState } from "react";
 import { Wand2 } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { products } from "@/lib/placeholder-data";
-import ProductCard from "./product-card";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
+import { recommendShoes, type ShoeRecommendationOutput } from "@/ai/ai-shoe-recommendation";
+import Image from "next/image";
 
 export default function AIRecommender() {
   const [preferences, setPreferences] = useState("");
-  const [recommendations, setRecommendations] = useState<any[]>([]);
+  const [recommendations, setRecommendations] = useState<ShoeRecommendationOutput['recommendations']>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const getRecommendations = async () => {
+    if (!preferences.trim()) return;
+
     setIsLoading(true);
     setError(null);
     setRecommendations([]);
 
-    // Mock AI call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // In a real app, you would call your GenAI flow here.
-    // For now, we'll return some random products as a mock response.
-    if(preferences.toLowerCase().includes('leather')) {
-        setRecommendations(products.filter(p => p.tags.includes('leather')).slice(0, 3));
-    } else {
-        const shuffled = [...products].sort(() => 0.5 - Math.random());
-        setRecommendations(shuffled.slice(0, 3));
+    try {
+      const result = await recommendShoes({ userPreferences: preferences });
+      if (result.recommendations) {
+        setRecommendations(result.recommendations);
+      }
+    } catch (e) {
+      setError("Sorry, I couldn't get recommendations at this time. Please try again.");
+      console.error(e);
     }
 
     setIsLoading(false);
@@ -55,7 +55,7 @@ export default function AIRecommender() {
             className="flex-1 text-base"
             rows={3}
           />
-          <Button onClick={getRecommendations} disabled={isLoading} className="bg-accent hover:bg-accent/90">
+          <Button onClick={getRecommendations} disabled={isLoading || !preferences.trim()} className="bg-accent hover:bg-accent/90">
             {isLoading ? "Finding shoes..." : "Get Recommendations"}
           </Button>
         </div>
@@ -67,15 +67,35 @@ export default function AIRecommender() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {isLoading && Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="flex flex-col space-y-3">
-                    <Skeleton className="h-[200px] w-full rounded-xl" />
+                    <Skeleton className="h-[192px] w-full rounded-xl" />
                     <div className="space-y-2">
                         <Skeleton className="h-4 w-[250px]" />
                         <Skeleton className="h-4 w-[200px]" />
                     </div>
                 </div>
             ))}
-            {recommendations.map((product) => (
-              <ProductCard key={product.id} product={product} />
+            {recommendations.map((rec, index) => (
+              <Card key={index} className="flex flex-col h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                <CardHeader className="p-0">
+                    <div className="relative w-full h-48">
+                        <Image
+                            src={rec.imageUrl}
+                            alt={rec.shoeName}
+                            fill
+                            className="object-cover"
+                        />
+                    </div>
+                </CardHeader>
+                <CardContent className="p-4 flex-grow">
+                    <CardTitle className="text-lg leading-tight mb-2">
+                        {rec.shoeName}
+                    </CardTitle>
+                    <p className="text-muted-foreground text-sm line-clamp-3">{rec.description}</p>
+                </CardContent>
+                <CardFooter className="p-4 bg-muted/50 mt-auto">
+                    <p className="text-sm text-muted-foreground"><span className="font-semibold text-foreground">AI says:</span> {rec.reason}</p>
+                </CardFooter>
+              </Card>
             ))}
           </div>
         </div>
