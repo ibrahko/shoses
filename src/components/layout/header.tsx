@@ -24,6 +24,8 @@ import {
 import {
   Sheet,
   SheetContent,
+  SheetHeader,
+  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useCart } from "@/hooks/use-cart";
@@ -154,27 +156,27 @@ export default function Header() {
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left">
-                <div className="flex flex-col h-full">
-                    <div className="flex items-center justify-between border-b pb-4">
-                       <Link href="/" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
-                          <Footprints className="h-6 w-6 text-primary" />
-                          <span className="font-bold text-lg">SneakerVerse</span>
-                        </Link>
-                    </div>
-                    <nav className="flex flex-col gap-4 py-6">
-                    {navLinks.map((link) => (
-                        <Link
-                        key={link.href}
-                        href={link.href}
-                        className="text-lg font-medium text-foreground hover:text-primary"
-                        onClick={() => setMobileMenuOpen(false)}
-                        >
-                        {link.label}
-                        </Link>
-                    ))}
-                    </nav>
-                </div>
+              <SheetContent side="left" className="flex flex-col p-0">
+                <SheetHeader className="border-b p-6">
+                  <SheetTitle>
+                    <Link href="/" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
+                      <Footprints className="h-6 w-6 text-primary" />
+                      <span className="font-bold text-lg text-foreground">SneakerVerse</span>
+                    </Link>
+                  </SheetTitle>
+                </SheetHeader>
+                <nav className="grid gap-4 p-6">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="text-lg font-medium text-foreground hover:text-primary"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </nav>
               </SheetContent>
             </Sheet>
 
