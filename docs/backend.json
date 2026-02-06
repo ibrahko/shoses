@@ -1,1 +1,419 @@
-{"entities":{"UserProfile":{"title":"User Profile","description":"A user's public profile information.","type":"object","properties":{"displayName":{"type":"string","description":"The user's display name."},"photoUrl":{"type":"string","description":"The URL of the user's profile photo."}}}},"auth":{"providers":["email"],"claims":{}},"firestore":{}}
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the SneakerVerse application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user."
+        },
+        "firstName": {
+          "type": "string",
+          "description": "First name of the user."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Last name of the user."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the user.",
+          "format": "email"
+        },
+        "addressId": {
+          "type": "string",
+          "description": "Reference to the user's address. (Relationship: User 1:1 Address)"
+        }
+      },
+      "required": [
+        "id",
+        "firstName",
+        "lastName",
+        "email"
+      ]
+    },
+    "Address": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Address",
+      "type": "object",
+      "description": "Represents a user's address.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the address."
+        },
+        "street": {
+          "type": "string",
+          "description": "Street address."
+        },
+        "city": {
+          "type": "string",
+          "description": "City."
+        },
+        "state": {
+          "type": "string",
+          "description": "State."
+        },
+        "zipCode": {
+          "type": "string",
+          "description": "Zip code."
+        },
+        "country": {
+          "type": "string",
+          "description": "Country."
+        }
+      },
+      "required": [
+        "id",
+        "street",
+        "city",
+        "state",
+        "zipCode",
+        "country"
+      ]
+    },
+    "Product": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Product",
+      "type": "object",
+      "description": "Represents a shoe product in the catalog.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the product."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the shoe."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the shoe."
+        },
+        "brand": {
+          "type": "string",
+          "description": "Brand of the shoe."
+        },
+        "size": {
+          "type": "number",
+          "description": "Size of the shoe."
+        },
+        "color": {
+          "type": "string",
+          "description": "Color of the shoe."
+        },
+        "price": {
+          "type": "number",
+          "description": "Price of the shoe."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL of the shoe image.",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "brand",
+        "size",
+        "color",
+        "price",
+        "imageUrl"
+      ]
+    },
+    "ShoppingCartItem": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ShoppingCartItem",
+      "type": "object",
+      "description": "Represents an item in the shopping cart.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the shopping cart item."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the user who owns the shopping cart. (Relationship: User 1:N ShoppingCartItem)"
+        },
+        "productId": {
+          "type": "string",
+          "description": "Reference to the product in the cart. (Relationship: Product 1:N ShoppingCartItem)"
+        },
+        "quantity": {
+          "type": "number",
+          "description": "Quantity of the product in the cart."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "productId",
+        "quantity"
+      ]
+    },
+    "Order": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Order",
+      "type": "object",
+      "description": "Represents an order placed by a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the order."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the user who placed the order. (Relationship: User 1:N Order)"
+        },
+        "orderDate": {
+          "type": "string",
+          "description": "Date the order was placed.",
+          "format": "date-time"
+        },
+        "totalAmount": {
+          "type": "number",
+          "description": "Total amount of the order."
+        },
+        "shippingAddressId": {
+          "type": "string",
+          "description": "Reference to the shipping address. (Relationship: Address 1:1 Order)"
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of the order (e.g., processing, shipped, delivered)."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "orderDate",
+        "totalAmount",
+        "shippingAddressId",
+        "status"
+      ]
+    },
+    "OrderItem": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "OrderItem",
+      "type": "object",
+      "description": "Represents an item within an order.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the order item."
+        },
+        "orderId": {
+          "type": "string",
+          "description": "Reference to the order. (Relationship: Order 1:N OrderItem)"
+        },
+        "productId": {
+          "type": "string",
+          "description": "Reference to the product. (Relationship: Product 1:N OrderItem)"
+        },
+        "quantity": {
+          "type": "number",
+          "description": "Quantity of the product in the order."
+        },
+        "price": {
+          "type": "number",
+          "description": "Price of the product at the time of the order."
+        }
+      },
+      "required": [
+        "id",
+        "orderId",
+        "productId",
+        "quantity",
+        "price"
+      ]
+    },
+    "Recommendation": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Recommendation",
+      "type": "object",
+      "description": "Represents a shoe recommendation for a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the recommendation."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the user who receives the recommendation. (Relationship: User 1:N Recommendation)"
+        },
+        "productId": {
+          "type": "string",
+          "description": "Reference to the recommended product. (Relationship: Product 1:N Recommendation)"
+        },
+        "recommendationDate": {
+          "type": "string",
+          "description": "Date the recommendation was generated.",
+          "format": "date-time"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason for the recommendation (e.g., purchase history, preferences)."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "productId",
+        "recommendationDate",
+        "reason"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profiles.  Uses path-based ownership for security.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/addresses/{addressId}",
+        "definition": {
+          "entityName": "Address",
+          "schema": {
+            "$ref": "#/backend/entities/Address"
+          },
+          "description": "Stores user addresses. Uses path-based ownership for security.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "addressId",
+              "description": "The unique identifier of the address."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/products/{productId}",
+        "definition": {
+          "entityName": "Product",
+          "schema": {
+            "$ref": "#/backend/entities/Product"
+          },
+          "description": "Stores product information.",
+          "params": [
+            {
+              "name": "productId",
+              "description": "The unique identifier of the product."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/shoppingCartItems/{cartItemId}",
+        "definition": {
+          "entityName": "ShoppingCartItem",
+          "schema": {
+            "$ref": "#/backend/entities/ShoppingCartItem"
+          },
+          "description": "Stores shopping cart items for each user. Uses path-based ownership for security.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "cartItemId",
+              "description": "The unique identifier of the cart item."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/orders/{orderId}",
+        "definition": {
+          "entityName": "Order",
+          "schema": {
+            "$ref": "#/backend/entities/Order"
+          },
+          "description": "Stores orders placed by users. Uses path-based ownership for security.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "orderId",
+              "description": "The unique identifier of the order."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/orders/{orderId}/orderItems/{orderItemId}",
+        "definition": {
+          "entityName": "OrderItem",
+          "schema": {
+            "$ref": "#/backend/entities/OrderItem"
+          },
+          "description": "Stores items within an order. Uses path-based ownership inherited from the parent order.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "orderId",
+              "description": "The unique identifier of the order."
+            },
+            {
+              "name": "orderItemId",
+              "description": "The unique identifier of the order item."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}/recommendations/{recommendationId}",
+        "definition": {
+          "entityName": "Recommendation",
+          "schema": {
+            "$ref": "#/backend/entities/Recommendation"
+          },
+          "description": "Stores shoe recommendations for users. Uses path-based ownership for security.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "recommendationId",
+              "description": "The unique identifier of the recommendation."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to provide a secure, scalable, and easily maintainable database for the SneakerVerse application. It prioritizes authorization independence by denormalizing user IDs where needed to avoid `get()` calls in security rules. The structure is also designed to support the required QAPs (Rules are not Filters) using segregation and path-based ownership. \n\n**Authorization Independence:** User IDs (`userId`) are strategically denormalized into subcollections to ensure that authorization rules can be applied without needing to fetch parent documents. This is crucial for maintaining atomic operations and simplifying security rule logic.\n\n**Structural Segregation:** Data with different access requirements is stored in separate collections or subcollections. User-specific data (e.g., shopping cart items, addresses) is stored under the `/users/{userId}` path, ensuring that only the user can access their own data.\n\n**Access Modeling:**\n*   **Path-Based Ownership:** The `/users/{userId}` path is used to define ownership for user-specific data, like addresses and shopping cart items. This simplifies security rules, as they can directly check if `request.auth.uid == userId`.\n\n**QAPs Support:**\n*   The design supports secure `list` operations by ensuring that each collection has a clear and consistent security posture. For example, listing products doesn't require complex filtering based on user roles, as all products are generally accessible.\n\n\nIn summary, this structure emphasizes denormalization, segregation, and clear ownership patterns to create a robust and secure Firestore database for the SneakerVerse application."
+  }
+}
