@@ -1,0 +1,1 @@
+{"entities":{"UserProfile":{"title":"User Profile","description":"A user's public profile information.","type":"object","properties":{"displayName":{"type":"string","description":"The user's display name."},"photoUrl":{"type":"string","description":"The URL of the user's profile photo."}}}},"auth":{"providers":["email"],"claims":{}},"firestore":{}}

@@ -7,8 +7,8 @@ import {
   ShoppingCart,
   User,
   Menu,
-  X,
   Footprints,
+  LogOut,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -28,18 +28,35 @@ import {
 } from "@/components/ui/sheet";
 import { useCart } from "@/hooks/use-cart";
 import CartSheet from "@/components/cart/cart-sheet";
-import { SneakerVerseLogo } from "@/components/icons";
+import { useUser } from "@/firebase";
+import { signOut } from "firebase/auth";
+import { useAuth } from "@/firebase";
+import { useRouter } from "next/navigation";
+
 
 export default function Header() {
   const { cartCount } = useCart();
   const [isCartOpen, setCartOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, loading } = useUser();
+  const auth = useAuth();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    if (!auth) return;
+    await signOut(auth);
+    router.push('/');
+  };
 
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/#products", label: "All Shoes" },
-    { href: "/account/orders", label: "My Orders" },
   ];
+
+  if (user) {
+    navLinks.push({ href: "/account/orders", label: "My Orders" });
+  }
+
 
   return (
     <>
@@ -98,21 +115,36 @@ export default function Header() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/account/profile">Profile</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/account/orders">Orders</Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                 <DropdownMenuItem asChild>
-                  <Link href="/login">Log In</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/signup">Sign Up</Link>
-                </DropdownMenuItem>
+                {loading ? (
+                  <DropdownMenuLabel>Loading...</DropdownMenuLabel>
+                ) : user ? (
+                  <>
+                    <DropdownMenuLabel>Hi, {user.displayName || user.email}</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href="/account/profile">Profile</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/account/orders">Orders</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleSignOut}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Log out</span>
+                    </DropdownMenuItem>
+                  </>
+                ) : (
+                  <>
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href="/login">Log In</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/signup">Sign Up</Link>
+                    </DropdownMenuItem>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
 
