@@ -1,3 +1,76 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "shoe-1",
+      "description": "A stylish running shoe in blue and orange.",
+      "imageUrl": "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxydW5uaW5nJTIwc2hvZXxlbnwwfHx8fDE3NzAzODE1MTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "running shoe"
+    },
+    {
+      "id": "shoe-2",
+      "description": "A classic leather boot in dark brown.",
+      "imageUrl": "https://images.unsplash.com/photo-1602250523361-ff299f086e1e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxsZWF0aGVyJTIwYm9vdHxlbnwwfHx8fDE3NzA0MDUyNTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "leather boot"
+    },
+    {
+      "id": "shoe-3",
+      "description": "A minimalist white sneaker for everyday wear.",
+      "imageUrl": "https://images.unsplash.com/photo-1595805737846-ab795bc2c782?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx3aGl0ZSUyMHNuZWFrZXJ8ZW58MHx8fHwxNzcwMzcyMjY2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "white sneaker"
+    },
+    {
+      "id": "shoe-4",
+      "description": "A high-top basketball shoe in black and red.",
+      "imageUrl": "https://images.unsplash.com/photo-1605348532760-6753d2c43329?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YmFza2V0YmFsbCUyMHNob2V8ZW58MHx8fHwxNzcwMzcyMjY2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "basketball shoe"
+    },
+    {
+      "id": "shoe-5",
+      "description": "A comfortable pair of sandals for summer.",
+      "imageUrl": "https://images.unsplash.com/photo-1591620447554-0200572992ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxzdW1tZXIlMjBzYW5kYWxzfGVufDB8fHx8MTc3MDQwNTI1OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "summer sandals"
+    },
+    {
+      "id": "shoe-6",
+      "description": "A sleek, modern dress shoe in black leather.",
+      "imageUrl": "https://images.unsplash.com/photo-1611937674427-01cd37d36732?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkcmVzcyUyMHNob2V8ZW58MHx8fHwxNzcwMzcyMzg3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "dress shoe"
+    },
+    {
+      "id": "shoe-7",
+      "description": "A rugged hiking boot ready for the trail.",
+      "imageUrl": "https://images.unsplash.com/photo-1546367564-ade1880f8921?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxoaWtpbmclMjBib290fGVufDB8fHx8MTc3MDM3MjI2Nnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hiking boot"
+    },
+    {
+      "id": "shoe-8",
+      "description": "A casual canvas slip-on shoe.",
+      "imageUrl": "https://images.unsplash.com/photo-1604136172276-0f0a615e7fae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzbGlwLW9uJTIwc2hvZXxlbnwwfHx8fDE3NzA0MDUyNTh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "slip-on shoe"
+    },
+    {
+      "id": "shoe-9",
+      "description": "Neon green athletic trainers for the gym.",
+      "imageUrl": "https://images.unsplash.com/photo-1727848562663-81fec613880c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxhdGhsZXRpYyUyMHRyYWluZXJzfGVufDB8fHx8MTc3MDQwNTI1OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "athletic trainers"
+    },
+    {
+      "id": "shoe-10",
+      "description": "A vintage-style suede sneaker in a muted tone.",
+      "imageUrl": "https://images.unsplash.com/photo-1704949871220-3f4f4488623e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzdWVkZSUyMHNuZWFrZXJ8ZW58MHx8fHwxNzcwMzgxNTE4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "suede sneaker"
+    },
+    {
+      "id": "shoe-11",
+      "description": "An elegant high-heel shoe for formal events.",
+      "imageUrl": "https://images.unsplash.com/photo-1611233299310-f6276ff55307?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxoaWdoJTIwaGVlbHN8ZW58MHx8fHwxNzcwMzYwODIzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "high heels"
+    },
+    {
+      "id": "shoe-12",
+      "description": "A lightweight water shoe for beach activities.",
+      "imageUrl": "https://images.unsplash.com/photo-1593126929111-08ae75f19917?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3YXRlciUyMHNob2V8ZW58MHx8fHwxNzcwNDA1MjU4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "water shoe"
+    }
+  ]
 }
