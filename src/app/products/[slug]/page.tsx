@@ -12,9 +12,9 @@ import { Label } from '@/components/ui/label';
 import { ShoppingCart, CheckCircle } from 'lucide-react';
 import { useCart } from '@/hooks/use-cart';
 
-export default function ProductDetailPage({ params }: { params: { slug: string } }) {
+export default function ProductDetailPage({ params: { slug } }: { params: { slug: string } }) {
   const { addToCart } = useCart();
-  const product = products.find((p) => p.slug === params.slug);
+  const product = products.find((p) => p.slug === slug);
 
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
